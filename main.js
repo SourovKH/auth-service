@@ -3,6 +3,7 @@ const cors = require('cors');
 const connectDB = require('./src/config/database');
 const authRouter = require('./src/routers/auth');
 const { logger } = require('./src/middleware/logger');
+const AdminUsers = require('./src/modles/Admin-users');
 
 require('dotenv').config();
 

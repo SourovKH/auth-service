@@ -1,13 +1,23 @@
 const bcrypt = require("bcryptjs/dist/bcrypt");
 const User = require("../modles/User");
 const { validateOTP, sendOTP } = require("../utils/otp");
+const AdminUsers = require("../modles/Admin-users");
 
 const handleSignup = async (req, res) => {
-  const { email, password, phone, name } = req.body;
+  const { email, password, phone, name, userType } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = new User({ email, password: hashedPassword, name, phone });
 
   try {
+    if(userType.toUpperCase() === 'ADMIN') {
+        const adminId = parseInt(req.body.adminId);
+        
+        const adminUser = await AdminUsers.findOne({email});
+        if(!adminUser || adminUser.adminId !== adminId)
+            return res.status(401).json({message: 'Invalid Credentials'});
+            user.adminId = adminId;
+    }
+
     await user.save();
     res.status(201).json({ message: "User created" });
   } catch (error) {
