@@ -3,12 +3,11 @@ This is authentication service. You can use this for your login or signup system
 
 ## features
 1. Signup
-2. Login with two factor authentication (Send OTP two email)
+2. Login with two factor authentication (Send OTP to email)
 
 ---
 ## Usage procedure:
 ### 1. Clone the repo
-bash
 git clone https://github.com/WEBX2024/auth-service
 
 ### 2. Install dependencies
@@ -24,7 +23,6 @@ EMAIL_PASS=
 OTP_EXPIRY=
 
 ### 4. To start the service
-bash
 npm start
 
 ---
