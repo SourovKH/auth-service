@@ -67,25 +67,6 @@ To generate OTP
 ## Status:
 Till now you can sign-up,login, otp verification by this projectYet it's not fully completed few developments are ongoing e.g. Data fetch in profile page and forgot password is not in working condition but after completing this project, can be a well mannered and scalable authenticator system.
 
-## Run jaeger
-```
-docker run --rm --name jaeger \
-  -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
-  -p 6831:6831/udp \
-  -p 6832:6832/udp \
-  -p 5778:5778 \
-  -p 16686:16686 \
-  -p 4317:4317 \
-  -p 4318:4318 \
-  -p 14250:14250 \
-  -p 14268:14268 \
-  -p 14269:14269 \
-  -p 9411:9411 \
-  jaegertracing/all-in-one:1.62.0
-```
-### Jaeger-ui
-http://localhost:16686
-
 ### Setup prometheus
 In `prometheus.yml` Update the target IP with your private IP
 
@@ -93,3 +74,8 @@ In `prometheus.yml` Update the target IP with your private IP
 ```
 docker-compose up -d
 ```
+### Prometheus-ui
+http://localhost:9090
+
+### Jaeger-ui
+http://localhost:16686
