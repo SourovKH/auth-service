@@ -4,7 +4,7 @@ const connectDB = require("./src/config/database");
 const authRouter = require("./src/routers/auth");
 const { logger } = require("./src/middleware/logger");
 const metricRouter = require("./src/routers/metric");
-const { requestCounter } = require("./src/middleware/metrics");
+const { requestCounter, errorCounter } = require("./src/middleware/metrics");
 
 require("dotenv").config();
 
@@ -19,6 +19,10 @@ app.use("/metrics", metricRouter);
 app.use(requestCounter);
 
 app.use("/auth", authRouter);
+app.get("/error", (req, res) => {
+  throw new Error("This is a sample error");
+});
+app.use(errorCounter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

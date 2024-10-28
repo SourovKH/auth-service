@@ -5,7 +5,13 @@ const register = new client.Registry();
 
 const counter = new client.Counter({
   name: "total_request",
-  help: "metric_help",
+  help: "Total number of requests in auth service",
+});
+
+const errorMetric = new client.Counter({
+  name: "total_errors",
+  help: "Total number of HTTP errors",
+  labelNames: ["method", "status"],
 });
 
 const requestCounter = (req, res, next) => {
@@ -13,6 +19,12 @@ const requestCounter = (req, res, next) => {
   next();
 };
 
-register.registerMetric(requestCounter);
+const errorCounter = (err, req, res, next) => {
+  errorMetric.inc({ method: req.method, status: 500 });
+  next();
+};
 
-module.exports = { register, requestCounter };
+register.registerMetric(requestCounter);
+register.registerMetric(errorCounter);
+
+module.exports = { register, requestCounter, errorCounter };
